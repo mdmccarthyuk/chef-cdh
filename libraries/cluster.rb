@@ -3,7 +3,7 @@ module Cdh
     include Cdh::Api
  
     def cluster_exists?(name)
-      rest_call("cloudera.mm.net", :get, "http://cloudera.mm.net:7180/api/v17/clusters/#{name}").kind_of? Net::HTTPSuccess
+      rest_call(node['cdh']['server'], :get, "http://#{node['cdh']['server']}:7180/api/v17/clusters/#{name}").kind_of? Net::HTTPSuccess
     end
   
     def create_cluster(name)

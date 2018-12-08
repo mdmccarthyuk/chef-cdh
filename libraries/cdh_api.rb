@@ -18,7 +18,7 @@ module Cdh
       end
       req.body = body
       req['content-type']="application/json"
-      req.basic_auth('admin','admin')
+      req.basic_auth(node['cdh']['user'],node['cdh']['pass'])
       response = http.request(req)
     end
 
