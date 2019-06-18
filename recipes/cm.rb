@@ -18,6 +18,18 @@ execute 'configure-database' do
 	not_if { ::File.exists?("/tmp/done_configure_db")}
 end
 
+template '/etc/cloudera-scm-server/db.properties' do
+	source 'db.properties.erb'
+	variables ({
+		:db_host => node['cdh']['db']['host'],
+		:db_port => node['cdh']['db']['port'],
+		:db_type => node['cdh']['db']['type'],
+		:db_name => node['cdh']['db']['name'],
+		:db_user => node['cdh']['db']['user'],
+		:db_pass => node['cdh']['db']['pass']
+	})
+end
+
 service 'cloudera-scm-server' do
 	supports :status => true, :restart => true, :reload => true
 	action [ :enable, :start ]
